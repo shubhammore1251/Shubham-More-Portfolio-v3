@@ -51,13 +51,13 @@ function CodePanel() {
         {/* Title bar */}
         <div className="flex items-center gap-2 border-b border-ink-foreground/10 px-5 py-4">
           <span className="flex h-3 w-3 items-center justify-center rounded-full bg-[#FF5F57]">
-            <X className="h-2 w-2 text-black/70 opacity-0 transition-opacity hover:opacity-100" />
+            <X className="cursor-pointer h-2 w-2 text-black/70 opacity-0 transition-opacity hover:opacity-100" />
           </span>
           <span className="flex h-3 w-3 items-center justify-center rounded-full bg-[#FEBC2E]">
-            <Minus className="h-2 w-2 text-black/70 opacity-0 transition-opacity hover:opacity-100" />
+            <Minus className="cursor-pointer h-2 w-2 text-black/70 opacity-0 transition-opacity hover:opacity-100" />
           </span>
           <span className="flex h-3 w-3 items-center justify-center rounded-full bg-[#28C840]">
-            <Square className="h-1.5 w-1.5 fill-current text-black/70 opacity-0 transition-opacity hover:opacity-100" />
+            <Square className="cursor-pointer h-1.5 w-1.5 fill-current text-black/70 opacity-0 transition-opacity hover:opacity-100" />
           </span>
 
           <span className="ml-3 font-mono text-xs text-ink-foreground/50">
@@ -123,7 +123,7 @@ export function HeroSection() {
   const links = [
     {
       label: "GitHub",
-      href: profile.githubUrl,
+      href: profile.github_url,
       icon: <GithubIcon className="h-4 w-4" />,
     },
     {

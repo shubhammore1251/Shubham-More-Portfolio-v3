@@ -1,11 +1,12 @@
 import { ArrowUpRight } from "lucide-react";
-import { projects } from "@/data/portfolio";
+import { getFeaturedProjects } from "@/lib/projects";
 import type { PortfolioProject } from "@/data/types";
 import { GithubIcon, ImageFallback, SectionHeader, TechTag } from "./shared";
 import Image from "next/image";
+import { Suspense } from "react";
 
 export function ProjectCard({ project }: { project: PortfolioProject }) {
-  const f = project.featured;
+  const f = project.is_featured;
   return (
     <article
       className={`group flex flex-col overflow-hidden rounded-2xl border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-lift focus-within:border-primary/60 ${f ? "lg:col-span-2 lg:grid lg:grid-cols-[1.35fr_1fr]" : ""}`}
@@ -13,14 +14,14 @@ export function ProjectCard({ project }: { project: PortfolioProject }) {
       <div
         className={`relative overflow-hidden border-b bg-secondary ${f ? "aspect-[16/10] lg:aspect-auto lg:border-b-0 lg:border-r" : "aspect-[16/10]"}`}
       >
-        {project.imageUrl ? (
+        {project.image_path ? (
           <Image
-            src={project.imageUrl}
-            alt={project.imageAlt}
+            src={project.image_path}
+            alt={project.image_alt}
             width={1280}
             height={800}
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+            className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
           />
         ) : (
           <ImageFallback label={project.title} />
@@ -62,9 +63,9 @@ export function ProjectCard({ project }: { project: PortfolioProject }) {
           ))}
         </ul>
         <div className="mt-auto flex flex-wrap gap-4 pt-6 text-sm font-semibold">
-          {project.liveUrl && (
+          {project.live_url && (
             <a
-              href={project.liveUrl}
+              href={project.live_url}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1 text-primary hover:text-primary-hover"
@@ -73,9 +74,9 @@ export function ProjectCard({ project }: { project: PortfolioProject }) {
               <span className="sr-only"> for {project.title}</span>
             </a>
           )}
-          {project.repositoryUrl && (
+          {project.github_url && (
             <a
-              href={project.repositoryUrl}
+              href={project.github_url}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 text-foreground hover:text-primary"
@@ -90,18 +91,28 @@ export function ProjectCard({ project }: { project: PortfolioProject }) {
   );
 }
 
-export function ProjectsSection() {
-  const sorted = [...projects].sort(
-    (a, b) =>
-      Number(b.featured) - Number(a.featured) || a.sortOrder - b.sortOrder,
-  );
+export async function ProjectsSection() {
+  // const sorted = [...projects].sort(
+  //   (a, b) =>
+  //     Number(b.featured) - Number(a.featured) || a.sortOrder - b.sortOrder,
+  // );
+  const sorted = await getFeaturedProjects();
   return (
     <section id="projects" className="border-t bg-secondary/50 py-20 md:py-28">
       <div className="container-page">
         <SectionHeader
           eyebrow="PERSONAL PROJECTS"
           title="Ideas I've turned into working software."
-        />
+        >
+          <a
+            href={"https://github.com/shubhammore1251?tab=repositories"}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-primary hover:text-primary-hover"
+          >
+            View more projects <ArrowUpRight className="h-4 w-4" />
+          </a>
+        </SectionHeader>
         <div className="reveal grid gap-6 lg:grid-cols-2">
           {sorted.map((p) => (
             <ProjectCard key={p.id} project={p} />

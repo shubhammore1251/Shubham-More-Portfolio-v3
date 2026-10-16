@@ -1,8 +1,11 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { blogPosts, hashnodeUrl } from "@/data/portfolio";
+import { hashnodeUrl } from "@/data/portfolio";
+import { getBlogPosts } from "@/lib/blogs";
 import type { PortfolioBlogPost } from "@/data/types";
 import { SectionHeader } from "./shared";
 import Image from "next/image";
+import { Suspense } from "react";
+import { connection } from "next/server";
 
 export function BlogCard({ post }: { post: PortfolioBlogPost }) {
   const date = new Date(post.publishedAt).toLocaleDateString("en-US", {
@@ -66,8 +69,32 @@ export function BlogCard({ post }: { post: PortfolioBlogPost }) {
   );
 }
 
-export async function BlogSection() {
-  const sorted = [...blogPosts].sort((a, b) => a.sortOrder - b.sortOrder);
+export function BlogSection() {
+  return (
+    <Suspense
+      fallback={
+        <section
+          id="blog"
+          className="border-t bg-card py-20 md:py-28"
+        >
+          <div className="container-page">
+            <p className="text-sm text-muted-foreground">
+              Loading articles...
+            </p>
+          </div>
+        </section>
+      }
+    >
+      <BlogSectionContent />
+    </Suspense>
+  );
+}
+
+async function BlogSectionContent() {
+  await connection();
+
+  const sorted = await getBlogPosts(3);
+
   return (
     <section id="blog" className="border-t bg-card py-20 md:py-28">
       <div className="container-page">

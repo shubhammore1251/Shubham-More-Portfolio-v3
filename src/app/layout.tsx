@@ -14,11 +14,31 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://shubhammore.dev.com"),
+
   title: "Shubham More | Full-Stack Software Engineer",
   description:
     "Full-stack engineer building web, mobile, backend, and AI-powered software.",
+
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      {
+        url: "/favicon-16x16.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
+      {
+        url: "/favicon-32x32.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+
   openGraph: {
     type: "website",
     url: "/",
@@ -35,6 +55,7 @@ export const metadata: Metadata = {
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
     title: "Shubham More | Full-Stack Software Engineer",
@@ -42,6 +63,7 @@ export const metadata: Metadata = {
       "Explore my projects, skills, engineering experience, and writing.",
     images: ["/og-image.png"],
   },
+
   robots: {
     index: true,
     follow: true,

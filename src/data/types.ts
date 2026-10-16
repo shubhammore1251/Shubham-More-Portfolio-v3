@@ -7,7 +7,7 @@ export interface PortfolioProfile {
   introduction: string;
   location: string | null;
   email: string;
-  githubUrl: string;
+  github_url: string;
   linkedinUrl: string;
   resumeUrl: string | null;
   avatarUrl: string | StaticImageData| null;
@@ -39,14 +39,15 @@ export interface PortfolioProject {
   summary: string;
   description: string;
   category: string;
-  imageUrl: string | StaticImageData | null;
-  imageAlt: string;
+  image_path: string | StaticImageData | null;
+  image_alt: string;
   technologies: TechnologyItem[];
-  liveUrl: string | null;
-  repositoryUrl: string | null;
+  live_url: string | null;
+  github_url: string | null;
   highlights: string[];
-  featured: boolean;
-  sortOrder: number;
+  is_featured: boolean;
+  is_published: boolean;
+  display_order: number;
 }
 
 export interface PortfolioExperience {

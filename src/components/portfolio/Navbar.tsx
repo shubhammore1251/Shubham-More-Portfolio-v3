@@ -6,7 +6,7 @@ import { navItems, profile } from "@/data/portfolio";
 export function Wordmark() {
   const [first, ...rest] = profile.fullName.split(" ");
   return (
-    <a href="#home" className="text-lg font-extrabold tracking-tight">
+    <a href="/" className="text-lg font-extrabold tracking-tight">
       {first.toLowerCase()}
       {rest.length > 0 && (
         <span className="text-muted-foreground">

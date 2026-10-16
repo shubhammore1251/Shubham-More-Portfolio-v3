@@ -6,6 +6,8 @@ import { ProjectsSection } from "@/components/portfolio/ProjectsSection";
 import { ExperienceSection } from "@/components/portfolio/ExperienceSection";
 import { BlogSection } from "@/components/portfolio/BlogSection";
 import { ContactSection, Footer } from "@/components/portfolio/ContactSection";
+import { Suspense } from "react";
+import { SectionSkeleton } from "@/components/portfolio/SectionSkeleton";
 
 export default function HomePage() {
   return (
@@ -15,9 +17,16 @@ export default function HomePage() {
         <HeroSection />
         <AboutSection />
         <SkillsSection />
-        <ProjectsSection />
+        <Suspense fallback={<SectionSkeleton type="projects" />}>
+          <ProjectsSection />
+        </Suspense>
+
         <ExperienceSection />
-        <BlogSection />
+
+        <Suspense fallback={<SectionSkeleton type="blogs" />}>
+          <BlogSection />
+        </Suspense>
+
         <ContactSection />
       </main>
       <Footer />

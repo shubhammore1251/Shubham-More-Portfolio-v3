@@ -41,7 +41,7 @@ export function ContactSection() {
         </div>
         <div className="mt-8 flex justify-center gap-3">
           <a
-            href={profile.githubUrl}
+            href={profile.github_url}
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub profile"
@@ -76,7 +76,7 @@ export function Footer() {
         </div>
         <div className="flex items-center gap-5 text-muted-foreground">
           <a
-            href={profile.githubUrl}
+            href={profile.github_url}
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub"

@@ -12,6 +12,25 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cffnzaephfjkpuofqlus.supabase.co",
+        pathname: "/storage/v1/object/public/portfolio-images/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.hashnode.com",
+        pathname: "/res/hashnode/image/upload/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.hashnode.com",
+        pathname: "/uploads/**",
+      }
+    ],
+  },
 };
 
 export default nextConfig;

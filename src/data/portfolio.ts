@@ -23,7 +23,7 @@ export const profile: PortfolioProfile = {
     "From web and mobile apps to backend systems and AI-powered products, I turn ideas into reliable software built for real-world use.",
   location: "India",
   email: "shubhamp1251@gmail.com",
-  githubUrl: "https://github.com/shubhammore1251",
+  github_url: "https://github.com/shubhammore1251",
   linkedinUrl: "https://www.linkedin.com/in/shubham-more1251/",
   resumeUrl:
     "https://drive.google.com/drive/folders/1TwfYL1Ydyg4zCiiTSEKKfASLb54f8T8a",
@@ -238,19 +238,19 @@ export const technologies = {
     true,
     10,
   ),
-  chroma: t("chroma", "Chroma", "ai", "i-logos:chroma", false, 11),
-  pinecone: t("pinecone", "Pinecone", "ai", "simple-icons:pinecone", false, 12),
-  weaviate: t("weaviate", "Weaviate", "ai", "i-logos:weaviate-icon", false, 13),
-  qdrant: t("qdrant", "Qdrant", "ai", "i-thesvg-color:qdrant-light", false, 14),
+  chroma: t("chroma", "Chroma", "ai", "thesvg-color:chroma", false, 11),
+  pinecone: t("pinecone", "Pinecone", "ai", "logos:pinecone-icon", false, 12),
+  weaviate: t("weaviate", "Weaviate", "ai", "logos:weaviate-icon", false, 13),
+  qdrant: t("qdrant", "Qdrant", "ai", "thesvg-color:qdrant-light", false, 14),
   huggingFace: t(
     "hugging-face",
     "Hugging Face",
     "ai",
-    "i-devicon:huggingface",
+    "thesvg-color:hugging-face",
     false,
     15,
   ),
-  faiss: t("faiss", "Faiss", "ai", "i-logos:meta-icon", false, 16),
+  faiss: t("faiss", "Faiss", "ai", "thesvg-color:meta", false, 16),
 
   // Cloud, DevOps & Tools
   aws: t("aws", "AWS", "cloud", "logos:aws", true, 1),
@@ -387,19 +387,20 @@ export const projects: PortfolioProject[] = [
     description:
       "A web app that ingests PDFs and docs, chunks and embeds them, and answers questions with cited sources. Built around a streaming chat UI and a FastAPI retrieval service.",
     category: "AI · Web",
-    imageUrl: projectAi,
-    imageAlt:
+    image_path: projectAi,
+    image_alt:
       "Screenshot of the AI Document Assistant showing a document list and chat panel",
     technologies: [T.nextjs, T.typescript, T.fastapi, T.postgres, T.langgraph],
-    liveUrl: "https://example.com",
-    repositoryUrl: "https://github.com/",
+    live_url: "https://example.com",
+    github_url: "https://github.com/",
     highlights: [
       "Streaming responses with source citations",
       "Hybrid keyword + vector search",
       "Background ingestion queue",
     ],
-    featured: true,
-    sortOrder: 1,
+    is_featured: true,
+    is_published: true,
+    display_order: 1,
   },
   {
     id: "p2",
@@ -409,8 +410,8 @@ export const projects: PortfolioProject[] = [
     description:
       "A pixel-perfect, universal React Native application for Muse AI and companion Cooper — an autonomous AI agent for recurring tasks, workflows, and goals.",
     category: "Mobile",
-    imageUrl: projectMuseAgent,
-    imageAlt: "Two phone screens showing Muse AI and Cooper",
+    image_path: projectMuseAgent,
+    image_alt: "Two phone screens showing Muse AI and Cooper",
     technologies: [
       T.reactNative,
       T.typescript,
@@ -419,14 +420,15 @@ export const projects: PortfolioProject[] = [
       T.agents,
       T.openaiApis,
     ],
-    liveUrl: null,
-    repositoryUrl: "https://github.com/shubhammore1251/Muse-AI-Agent-Clone",
+    live_url: null,
+    github_url: "https://github.com/shubhammore1251/Muse-AI-Agent-Clone",
     highlights: [
       "Multi-step agent task execution using browser automation and connected tools.",
       "Composio integrations with Google, GitHub, Slack, Notion, and more.",
     ],
-    featured: false,
-    sortOrder: 2,
+    is_featured: false,
+    is_published: true,
+    display_order: 2,
   },
   {
     id: "p3",
@@ -437,8 +439,8 @@ export const projects: PortfolioProject[] = [
     description:
       "Buildly.io is a website builder that uses AI to generate a website based on your needs. It uses OpenAI LLM to generate the website and AI Agents to create the content.",
     category: "AI · Web",
-    imageUrl: projectBuildlyio,
-    imageAlt: "Production API Starter",
+    image_path: projectBuildlyio,
+    image_alt: "Buildly.io Image",
     technologies: [
       T.nextjs,
       T.tailwind,
@@ -447,15 +449,16 @@ export const projects: PortfolioProject[] = [
       T.agents,
       T.postgres,
     ],
-    liveUrl: "https://buildlyio.shubhammoredev.com",
-    repositoryUrl: "https://github.com/shubhammore1251/buildlyio",
+    live_url: "https://buildlyio.shubhammoredev.com",
+    github_url: "https://github.com/shubhammore1251/buildlyio",
     highlights: [
       "AI Agents to create the content",
       "Background agent orchestration using Inngest",
       "Secure sandboxed execution using E2B",
     ],
-    featured: false,
-    sortOrder: 3,
+    is_featured: false,
+    is_published: true,
+    display_order: 3,
   },
 ];
 
