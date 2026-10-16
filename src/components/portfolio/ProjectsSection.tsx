@@ -1,9 +1,10 @@
+import { connection } from "next/server";
 import { ArrowUpRight } from "lucide-react";
 import { getFeaturedProjects } from "@/lib/projects";
 import type { PortfolioProject } from "@/data/types";
 import { GithubIcon, ImageFallback, SectionHeader, TechTag } from "./shared";
 import Image from "next/image";
-import { Suspense } from "react";
+
 
 export function ProjectCard({ project }: { project: PortfolioProject }) {
   const f = project.is_featured;
@@ -96,6 +97,7 @@ export async function ProjectsSection() {
   //   (a, b) =>
   //     Number(b.featured) - Number(a.featured) || a.sortOrder - b.sortOrder,
   // );
+  await connection();
   const sorted = await getFeaturedProjects();
   return (
     <section id="projects" className="border-t bg-secondary/50 py-20 md:py-28">
