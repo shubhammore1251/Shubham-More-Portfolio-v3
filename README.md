@@ -52,13 +52,6 @@ Open <http://localhost:3000> in your browser.
 npm run build
 npm run start
 ```
-
-## Preview image
-
-Add a screenshot of the homepage at
-`public/images/portfolio-preview.png`, or update the image path above to
-match the location of your screenshot.
-
 ------------------------------------------------------------------------
 
 Designed and developed by **Shubham More**.
