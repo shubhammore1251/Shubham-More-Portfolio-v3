@@ -6,7 +6,7 @@ and writing.
 
 ![Portfolio website preview](public/portfolio-preview.png)
 
-**Live website:** [shubhammore.dev.com](https://shubhammore.dev.com)
+**Live website:** [shubhammoredev.com](https://shubhammoredev.com)
 
 ## About
 

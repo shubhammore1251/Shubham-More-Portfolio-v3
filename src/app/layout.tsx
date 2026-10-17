@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://shubhammore.dev.com"),
+  metadataBase: new URL("https:/shubhammoredev.com"),
 
   title: "Shubham More | Full-Stack Software Engineer",
   description:
