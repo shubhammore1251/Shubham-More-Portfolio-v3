@@ -1,179 +1,110 @@
-
-import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getAdminSession } from "@/lib/supabase/admin";
+import { getAdminIdentity } from "@/lib/supabase/admin";
 import { EnrollAuthenticator } from "@/components/admin/EnrollAuthenticator";
 
 export const metadata = {
-  title: "Admin Security",
-  robots: {
-    index: false,
-    follow: false,
-  },
+  title: "Security Settings | Admin",
+  robots: { index: false, follow: false },
 };
 
-function AdminSecurityFallback() {
-  return (
-    <main className="min-h-screen bg-background">
-      <div className="container-page animate-pulse py-8 md:py-10">
-        {/* Breadcrumb */}
-        <div className="h-3 w-36 rounded bg-muted" />
+export default async function AdminSecurityPage() {
+  const identity = await getAdminIdentity();
 
-        {/* Page heading */}
-        <div className="mt-5 space-y-3">
-          <div className="h-8 w-56 rounded-lg bg-muted" />
-          <div className="h-4 w-80 max-w-full rounded bg-muted" />
-        </div>
-
-        {/* Security settings card */}
-        <div className="mt-8 overflow-hidden rounded-[22px] border border-border bg-card shadow-sm">
-          <div className="border-b border-border p-5 sm:p-6">
-            <div className="h-5 w-44 rounded bg-muted" />
-            <div className="mt-3 h-4 w-full max-w-md rounded bg-muted" />
-          </div>
-
-          <div className="space-y-6 p-5 sm:p-6">
-            {/* Authenticator status */}
-            <div className="flex items-start gap-4 rounded-2xl border border-border p-4 sm:p-5">
-              <div className="size-11 shrink-0 rounded-full bg-muted" />
-              <div className="min-w-0 flex-1 space-y-3">
-                <div className="h-4 w-48 max-w-full rounded bg-muted" />
-                <div className="h-3 w-full max-w-lg rounded bg-muted" />
-                <div className="h-3 w-3/4 max-w-md rounded bg-muted" />
-              </div>
-            </div>
-
-            {/* Setup instructions */}
-            <div className="space-y-3">
-              <div className="h-4 w-40 rounded bg-muted" />
-              <div className="h-24 rounded-xl border border-border bg-muted/40" />
-            </div>
-
-            {/* Action buttons */}
-            <div className="flex flex-wrap gap-3">
-              <div className="h-10 w-36 rounded-xl bg-muted" />
-              <div className="h-10 w-28 rounded-xl border border-border bg-card" />
-            </div>
-          </div>
-        </div>
-
-        <p className="mt-4 text-xs text-muted-foreground">
-          Loading security settings...
-        </p>
-      </div>
-    </main>
-  );
-}
-
-async function AdminSecurityContent() {
-  const session = await getAdminSession();
-
-  if (!session.authorized) {
-    if (session.reason === "unauthenticated") {
+  if (!identity.authorized) {
+    if (identity.reason === "unauthenticated") {
       redirect("/admin/login");
-    }
-
-    if (session.reason === "mfa_required") {
-      redirect("/admin/login?mfa=required");
     }
 
     redirect("/");
   }
 
+  if (
+    identity.hasVerifiedFactor &&
+    identity.currentLevel !== "aal2"
+  ) {
+    redirect("/admin/login?mfa=required");
+  }
+
+  const setupRequired = !identity.hasVerifiedFactor;
+
   return (
-    <main className="min-h-screen bg-background">
-      <div className="container-page py-8 md:py-10">
-        {/* Breadcrumb */}
-        <nav
-          aria-label="Breadcrumb"
-          className="flex items-center gap-2 text-xs text-muted-foreground"
+    <main className="min-h-screen bg-background px-4 py-10 text-foreground sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-4xl">
+        <Link
+          href={setupRequired ? "/admin/security" : "/admin"}
+          className="text-sm text-muted-foreground transition hover:text-foreground"
         >
-          <Link
-            href="/admin"
-            className="transition-colors hover:text-foreground"
-          >
-            Admin
-          </Link>
-          <span aria-hidden="true">/</span>
-          <span className="text-foreground">Security settings</span>
-        </nav>
+          {setupRequired ? "Security setup" : "← Back to dashboard"}
+        </Link>
 
-        {/* Page header */}
-        <div className="mt-5">
-          <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">
-            Security settings
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-            Protect your admin account by setting up an authenticator app
-            for two-factor authentication.
-          </p>
-        </div>
-
-        {/* Security panel */}
-        <section className="mt-8 overflow-hidden rounded-[22px] border border-border bg-card shadow-sm">
-          <div className="border-b border-border px-5 py-5 sm:px-6">
-            <div className="flex items-start gap-3">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  className="size-5 text-foreground"
-                  aria-hidden="true"
-                >
-                  <path d="M12 3 19 6v5c0 4.5-2.9 7.7-7 10-4.1-2.3-7-5.5-7-10V6l7-3Z" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg>
-              </div>
-
-              <div>
-                <h2 className="text-base font-semibold">
-                  Two-factor authentication
-                </h2>
-                <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                  Add another layer of protection using a time-based code
-                  from your authenticator app.
-                </p>
-              </div>
+        <header className="mt-8">
+          <div className="flex items-center gap-3">
+            <div className="flex size-12 items-center justify-center rounded-2xl border border-border bg-card">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.6"
+                className="size-6"
+                aria-hidden="true"
+              >
+                <rect x="4" y="10" width="16" height="11" rx="2" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                <path d="M12 14v3" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+                Administrator
+              </p>
+              <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
+                {setupRequired ? "Secure your account" : "Security settings"}
+              </h1>
             </div>
           </div>
 
-          <div className="p-5 sm:p-6">
-            <EnrollAuthenticator />
+          <p className="mt-4 max-w-2xl leading-7 text-muted-foreground">
+            {setupRequired
+              ? "Set up an authenticator before accessing the admin dashboard. Your account remains restricted until verification succeeds."
+              : "Manage your authenticator securely. A replacement is verified before your existing authenticator is removed."}
+          </p>
+        </header>
+
+        {setupRequired && (
+          <div className="mt-8 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4">
+            <p className="font-medium">Authenticator setup required</p>
+            <p className="mt-1 text-sm leading-6 text-muted-foreground">
+              Dashboard and content-management access remain blocked until
+              you complete MFA verification.
+            </p>
           </div>
+        )}
+
+        <section className="mt-8 rounded-3xl border border-border bg-card p-5 shadow-sm sm:p-8">
+          <div className="mb-6 flex items-start justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-semibold">
+                Two-factor authentication
+              </h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Use an authenticator app that generates time-based codes.
+              </p>
+            </div>
+            <span className="shrink-0 rounded-full border border-border px-3 py-1 text-xs font-medium">
+              {setupRequired ? "Setup needed" : "AAL2 verified"}
+            </span>
+          </div>
+
+          <EnrollAuthenticator
+            replacementMode={!setupRequired}
+          />
         </section>
 
-        {/* Security reminder */}
-        <div className="mt-5 flex items-start gap-3 rounded-2xl border border-border bg-card/60 p-4">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.7"
-            className="mt-0.5 size-5 shrink-0 text-muted-foreground"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="9" />
-            <path d="M12 11v5M12 8h.01" />
-          </svg>
-
-          <p className="text-sm leading-6 text-muted-foreground">
-            Keep your authenticator app accessible. If your account requires
-            two-factor authentication, you may need a valid verification code
-            to sign in.
-          </p>
-        </div>
+        <p className="mt-5 text-center text-xs leading-5 text-muted-foreground">
+          Never share your one-time codes or authenticator setup key.
+        </p>
       </div>
     </main>
-  );
-}
-
-export default function AdminSecurityPage() {
-  return (
-    <Suspense fallback={<AdminSecurityFallback />}>
-      <AdminSecurityContent />
-    </Suspense>
   );
 }

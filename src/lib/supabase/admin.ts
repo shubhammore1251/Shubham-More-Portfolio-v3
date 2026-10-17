@@ -1,7 +1,6 @@
-
 import { createClient } from "@/lib/supabase/server";
 
-export async function getAdminSession() {
+export async function getAdminIdentity() {
   const supabase = await createClient();
 
   const {
@@ -16,7 +15,6 @@ export async function getAdminSession() {
     };
   }
 
-  // Step 1: Verify administrator membership.
   const { data: admin, error: adminError } = await supabase
     .from("admin_users")
     .select("user_id")
@@ -30,15 +28,46 @@ export async function getAdminSession() {
     };
   }
 
-  // Step 2: Require completed MFA verification (AAL2).
+  const { data: factors, error: factorsError } =
+    await supabase.auth.mfa.listFactors();
+
+  if (factorsError) {
+    return {
+      authorized: false as const,
+      reason: "mfa_required" as const,
+    };
+  }
+
+  const verifiedFactors = factors.totp.filter(
+    (factor) => factor.status === "verified",
+  );
+
   const {
     data: assurance,
     error: assuranceError,
   } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
 
+  return {
+    authorized: true as const,
+    supabase,
+    user,
+    hasVerifiedFactor: verifiedFactors.length > 0,
+    currentLevel: assuranceError
+      ? null
+      : assurance?.currentLevel ?? null,
+  };
+}
+
+export async function getAdminSession() {
+  const identity = await getAdminIdentity();
+
+  if (!identity.authorized) {
+    return identity;
+  }
+
   if (
-    assuranceError ||
-    assurance?.currentLevel !== "aal2"
+    !identity.hasVerifiedFactor ||
+    identity.currentLevel !== "aal2"
   ) {
     return {
       authorized: false as const,
@@ -46,10 +75,9 @@ export async function getAdminSession() {
     };
   }
 
-  // Step 3: Authorize the verified administrator.
   return {
     authorized: true as const,
-    supabase,
-    user,
+    supabase: identity.supabase,
+    user: identity.user,
   };
 }

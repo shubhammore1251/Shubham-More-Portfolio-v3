@@ -74,12 +74,17 @@ export default function AdminLoginPage() {
         (factor) => factor.status === "verified",
       );
 
-      if (!verifiedFactor) {
-        await supabase.auth.signOut({ scope: "local" });
+      // if (!verifiedFactor) {
+      //   await supabase.auth.signOut({ scope: "local" });
 
-        throw new Error(
-          "No verified authenticator is enrolled. Set up your authenticator before signing in.",
-        );
+      //   throw new Error(
+      //     "No verified authenticator is enrolled. Set up your authenticator before signing in.",
+      //   );
+      // }
+
+      if (!verifiedFactor) {
+        router.replace("/admin/security?setup=required");
+        return;
       }
 
       // Start the MFA challenge. Do not navigate to /admin yet.
@@ -241,9 +246,13 @@ export default function AdminLoginPage() {
 
       const factor = factors.totp.find((item) => item.status === "verified");
 
+      // if (!factor) {
+      //   await supabase.auth.signOut({ scope: "local" });
+      //   router.replace("/admin/login");
+      //   return;
+      // }
       if (!factor) {
-        await supabase.auth.signOut({ scope: "local" });
-        router.replace("/admin/login");
+        router.replace("/admin/security?setup=required");
         return;
       }
 
