@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
   title: "Shubham More | Full-Stack Software Engineer",
   description:
-    "Full-stack engineer building web, mobile, backend, and AI-powered software.",
+    "Full-stack software engineer building web and mobile applications, scalable backend systems, and AI-powered solutions from initial architecture through production deployment.",
 
   icons: {
     icon: [
