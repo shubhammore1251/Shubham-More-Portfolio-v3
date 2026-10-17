@@ -23,6 +23,7 @@ export function ProjectCard({ project }: { project: PortfolioProject }) {
             height={800}
             loading="lazy"
             className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
+            fetchPriority="high"
           />
         ) : (
           <ImageFallback label={project.title} />

@@ -28,6 +28,7 @@ export function ProfileAvatar({
             height={288}
             loading="lazy"
             className="h-full w-full object-cover"
+            fetchPriority="high"
           />
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-secondary text-5xl font-extrabold text-primary">

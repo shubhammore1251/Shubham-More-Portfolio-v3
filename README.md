@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shubham More --- Portfolio
 
-## Getting Started
+A personal portfolio showcasing my work as a software developer,
+including selected projects, technical skills, professional experience,
+and writing.
 
-First, run the development server:
+![Portfolio website preview](public/portfolio-preview.png)
 
-```bash
+**Live website:** [shubhammore.dev.com](https://shubhammore.dev.com)
+
+## About
+
+This website brings together my development work, experience, and
+technical interests in one place. It highlights projects I've built, the
+technologies I work with, and the problems I've explored throughout my
+software development journey.
+
+## What's inside
+
+-   **Introduction** --- an overview of who I am and what I do.
+-   **Skills** --- technologies and tools I work with.
+-   **Projects** --- selected work, with details about each project.
+-   **Experience** --- professional background and development
+    experience.
+-   **Blog** --- articles and notes on technical topics.
+-   **Contact** --- ways to get in touch.
+
+## Built with
+
+-   [Next.js](https://nextjs.org/)
+-   React
+-   TypeScript
+-   Supabase
+-   Tailwind CSS
+
+## Run locally
+
+Make sure Node.js and npm are installed.
+
+``` bash
+git clone <repository-url>
+cd <repository-directory>
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000> in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+``` bash
+npm run build
+npm run start
+```
 
-## Learn More
+## Preview image
 
-To learn more about Next.js, take a look at the following resources:
+Add a screenshot of the homepage at
+`public/images/portfolio-preview.png`, or update the image path above to
+match the location of your screenshot.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+------------------------------------------------------------------------
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Designed and developed by **Shubham More**.

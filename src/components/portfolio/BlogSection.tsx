@@ -25,11 +25,12 @@ export function BlogCard({ post }: { post: PortfolioBlogPost }) {
         {post.coverImageUrl ? (
           <Image
             src={post.coverImageUrl}
-            alt=""
+            alt={`blog cover image for ${post.title}`}
             width={1200}
             height={630}
             loading="lazy"
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fetchPriority="high"
           />
         ) : (
           <div className="flex h-full w-full items-end bg-secondary p-5 transition-transform duration-500 group-hover:scale-105">
