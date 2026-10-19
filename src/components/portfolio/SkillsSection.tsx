@@ -80,7 +80,7 @@ export function SkillsSection() {
       >
         <p className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
           <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-          core technology
+          Currently exploring
         </p>
       </SectionHeader>
 

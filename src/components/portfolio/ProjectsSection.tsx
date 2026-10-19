@@ -76,10 +76,10 @@ function ProjectCard({ project, variant, index, total }: ProjectCardProps) {
   return (
     <article
       data-project-tile={variant}
-      className={`group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border bg-card transition-[transform,border-color,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-lift focus-within:border-primary/60 ${getPlacementClass(index, total, variant)} ${horizontalFeatured ? "lg:h-auto lg:flex-row" : ""} ${project.is_featured ? "border-primary/60 shadow-soft" : "border-border/80"}`}
+      className={`group relative flex h-full min-w-0 flex-col overflow-visible rounded-2xl border bg-card transition-[transform,border-color,box-shadow] duration-300 hover:z-20 hover:-translate-y-1 hover:border-primary/60 hover:shadow-lift focus-within:z-20 focus-within:border-primary/60 ${getPlacementClass(index, total, variant)} ${horizontalFeatured ? "lg:h-auto lg:flex-row" : ""} ${project.is_featured ? "border-primary/60 shadow-soft" : "border-border/80"}`}
     >
       <div
-        className={`relative w-full shrink-0 overflow-hidden border-b border-border/70 bg-secondary ${mediaRatio} ${prominent ? "p-2 sm:p-3" : "p-2"} ${horizontalFeatured ? "lg:aspect-auto lg:min-h-[22rem] lg:w-[48%] lg:border-b-0 lg:border-r" : ""}`}
+        className={`relative w-full shrink-0 overflow-hidden rounded-t-2xl border-b border-border/70 bg-secondary ${mediaRatio} ${prominent ? "p-2 sm:p-3" : "p-2"} ${horizontalFeatured ? "lg:aspect-auto lg:min-h-[22rem] lg:w-[48%] lg:rounded-l-2xl lg:rounded-tr-none lg:border-b-0 lg:border-r" : ""}`}
       >
         {project.image_path ? (
           <Image
@@ -149,8 +149,36 @@ function ProjectCard({ project, variant, index, total }: ProjectCardProps) {
             <TechTag key={tech.id} tech={tech} />
           ))}
           {hiddenTechnologyCount > 0 && (
-            <li className="inline-flex items-center rounded-full border border-border/80 bg-secondary/70 px-2 py-1 font-mono text-[10px] text-muted-foreground">
-              +{hiddenTechnologyCount}
+            <li className="group/tech-overflow relative inline-flex">
+              <button
+                type="button"
+                aria-label={`Show ${hiddenTechnologyCount} additional technologies`}
+                aria-describedby={`project-tech-overflow-${project.id}`}
+                title={`${hiddenTechnologyCount} additional technologies`}
+                className="cursor-pointer inline-flex items-center gap-1 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 font-mono text-[10px] font-semibold text-primary transition-colors hover:border-primary/60 hover:bg-primary/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              >
+                +{hiddenTechnologyCount} more
+              </button>
+
+              <div
+                id={`project-tech-overflow-${project.id}`}
+                role="tooltip"
+                className="invisible pointer-events-none absolute bottom-full right-0 z-50 mb-2 w-64 max-w-[80vw] translate-y-1 rounded-xl border border-border bg-card p-3 opacity-0 shadow-xl transition-all duration-150 group-hover/tech-overflow:visible group-hover/tech-overflow:translate-y-0 group-hover/tech-overflow:opacity-100 group-focus-within/tech-overflow:visible group-focus-within/tech-overflow:translate-y-0 group-focus-within/tech-overflow:opacity-100"
+              >
+                <p className="mb-2 text-[11px] font-semibold text-foreground">
+                  Also built with
+                </p>
+                <ul
+                  className="flex flex-wrap gap-1.5"
+                  aria-label="Additional technologies"
+                >
+                  {project.technologies
+                    .slice(visibleTechnologies.length)
+                    .map((tech) => (
+                      <TechTag key={tech.id} tech={tech} />
+                    ))}
+                </ul>
+              </div>
             </li>
           )}
         </ul>
@@ -217,10 +245,7 @@ export async function ProjectsSection() {
         >
           {projects.map((project, index) => (
             <ProjectCard
-              // key={project.id}
-              // project={project}
-              // variant={tiles[index] ?? "compact"}
-              key={`${project.id}-${index}`}
+              key={project.id}
               project={project}
               variant={tiles[index] ?? "compact"}
               index={index}
